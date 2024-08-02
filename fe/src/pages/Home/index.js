@@ -1,5 +1,7 @@
 import {
-  Card, Container, Header, ListContainer, InputSearchContainer,
+  Card, Container, Header,
+  InputSearchContainer,
+  ListContainer,
 } from './styles';
 
 import arrow from '../../assets/images/icons/arrow.svg';
