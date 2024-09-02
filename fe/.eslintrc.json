@@ -13,6 +13,10 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/react-in-jsx-scope": "off",
-    "import/prefer-default-export":"off"
+    "import/prefer-default-export": "off",
+    "react/jsx-no-bind": "off",
+    "quotes": ["error", "single"],
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off"
   }
 }
