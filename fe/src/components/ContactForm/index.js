@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { ButtonContainer, Form } from './styles';
 
 import useErrors from '../../hooks/useErrors';
-import isEmailValid from '../../utils/isEmailValid';
 
 import formatPhone from '../../utils/formatPhone';
+import isEmailValid from '../../utils/isEmailValid';
+
 import Button from '../Button';
 import FormGroup from '../FormGroup';
 import Input from '../Input';
@@ -17,7 +18,11 @@ export default function ContactForm({ buttonLabel }) {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
-  const { setError, removeError, getErrorMessageByFieldName } = useErrors();
+  const {
+    setError, removeError, getErrorMessageByFieldName, errors,
+  } = useErrors();
+
+  const isFormValid = name && errors.length === 0;
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -44,16 +49,26 @@ export default function ContactForm({ buttonLabel }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log({
-    //   name,
-    //   email,
-    //   phone,
-    //   category,
-    // });
+    console.log({
+      name,
+      email,
+      phone,
+      category,
+    });
   }
 
   function handlePhoneChange(e) {
-    setPhone(formatPhone(e.target.value));
+    const formattedPhone = formatPhone(e.target.value);
+    setPhone(formattedPhone);
+
+    if (formattedPhone.length < 14) {
+      setError({
+        field: 'phone',
+        message: 'Telefone inválido',
+      });
+    } else {
+      removeError('phone');
+    }
   }
 
   return (
@@ -64,7 +79,7 @@ export default function ContactForm({ buttonLabel }) {
       <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
           error={getErrorMessageByFieldName('name')}
-          placeholder="Nome"
+          placeholder="Nome *"
           value={name}
           onChange={handleNameChange}
         />
@@ -78,8 +93,9 @@ export default function ContactForm({ buttonLabel }) {
           onChange={handelEmailChange}
         />
       </FormGroup>
-      <FormGroup>
+      <FormGroup error={getErrorMessageByFieldName('phone')}>
         <Input
+          error={getErrorMessageByFieldName('phone')}
           type="tel"
           placeholder="Telefone"
           maxLength={15}
@@ -98,7 +114,12 @@ export default function ContactForm({ buttonLabel }) {
         </Select>
       </FormGroup>
       <ButtonContainer>
-        <Button type="submit">{buttonLabel}</Button>
+        <Button
+          type="submit"
+          disabled={!isFormValid}
+        >
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </Form>
   );
