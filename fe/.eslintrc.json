@@ -17,6 +17,8 @@
     "react/jsx-no-bind": "off",
     "quotes": ["error", "single"],
     "implicit-arrow-linebreak": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "object-curly-newline": "off",
+    "max-len": "off"
   }
 }

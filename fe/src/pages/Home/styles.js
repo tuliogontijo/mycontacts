@@ -49,20 +49,24 @@ export const Header = styled.header`
   }
 `;
 
-export const ListContainer = styled.div`
+export const ListHeader = styled.header`
   margin-top: 24px;
-  header {
-    margin-bottom: 8px;
-    button {
-      background: transparent;
-      border: none;
-      display: flex;
-      align-items: center;
-    }
+  margin-bottom: 8px;
+  button {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+
     span {
       margin-right: 8px;
       font-weight: bold;
       color: ${({ theme }) => theme.colors.primary.main};
+    }
+
+    img {
+      transform: rotate(${({ orderBy }) => (orderBy === 'DESC' ? '180deg' : '0deg')});
+      transition: transform 0.2s ease-in;
     }
   }
 `;
